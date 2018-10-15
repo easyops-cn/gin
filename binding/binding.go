@@ -66,9 +66,19 @@ var (
 	Query         = queryBinding{}
 	FormPost      = formPostBinding{}
 	FormMultipart = formMultipartBinding{}
-	ProtoBuf      = protobufBinding{}
-	MsgPack       = msgpackBinding{}
 )
+
+var defaultBinding = make(map[string]Binding)
+
+func SetDefaultBinding(contentType string, binding Binding) {
+	defaultBinding[contentType] = binding
+}
+
+func init() {
+	defaultBinding[MIMEJSON] = JSON
+	defaultBinding[MIMEXML] = XML
+	defaultBinding[MIMEXML2] = XML
+}
 
 // Default returns the appropriate Binding instance based on the HTTP method
 // and the content type.
@@ -77,18 +87,11 @@ func Default(method, contentType string) Binding {
 		return Form
 	}
 
-	switch contentType {
-	case MIMEJSON:
-		return JSON
-	case MIMEXML, MIMEXML2:
-		return XML
-	case MIMEPROTOBUF:
-		return ProtoBuf
-	case MIMEMSGPACK, MIMEMSGPACK2:
-		return MsgPack
-	default: //case MIMEPOSTForm, MIMEMultipartPOSTForm:
-		return Form
+	if binding, ok := defaultBinding[contentType]; ok {
+		return binding
 	}
+
+	return Form
 }
 
 func validate(obj interface{}) error {
@@ -97,3 +100,5 @@ func validate(obj interface{}) error {
 	}
 	return Validator.ValidateStruct(obj)
 }
+
+var Validate = validate // TODO
