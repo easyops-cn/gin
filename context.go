@@ -780,9 +780,11 @@ func (c *Context) XML(code int, obj interface{}) {
 }
 
 // YAML serializes the given struct as YAML into the response body.
+/* TODO
 func (c *Context) YAML(code int, obj interface{}) {
 	c.Render(code, render.YAML{Data: obj})
 }
+*/
 
 // ProtoBuf serializes the given struct as ProtoBuf into the response body.
 /* TODO

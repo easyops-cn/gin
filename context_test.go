@@ -942,19 +942,6 @@ func TestContextRenderFile(t *testing.T) {
 	assert.Equal(t, "text/plain; charset=utf-8", w.Header().Get("Content-Type"))
 }
 
-// TestContextRenderYAML tests that the response is serialized as YAML
-// and Content-Type is set to application/x-yaml
-func TestContextRenderYAML(t *testing.T) {
-	w := httptest.NewRecorder()
-	c, _ := CreateTestContext(w)
-
-	c.YAML(http.StatusCreated, H{"foo": "bar"})
-
-	assert.Equal(t, http.StatusCreated, w.Code)
-	assert.Equal(t, "foo: bar\n", w.Body.String())
-	assert.Equal(t, "application/x-yaml; charset=utf-8", w.Header().Get("Content-Type"))
-}
-
 func TestContextHeaders(t *testing.T) {
 	c, _ := CreateTestContext(httptest.NewRecorder())
 	c.Header("Content-Type", "text/plain")

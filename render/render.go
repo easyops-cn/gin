@@ -26,7 +26,6 @@ var (
 	_ Render     = HTML{}
 	_ HTMLRender = HTMLDebug{}
 	_ HTMLRender = HTMLProduction{}
-	_ Render     = YAML{}
 	_ Render     = Reader{}
 	_ Render     = AsciiJSON{}
 )
