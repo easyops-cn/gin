@@ -2,11 +2,12 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package render
+package renderpb
 
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin/render"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -32,5 +33,5 @@ func (r ProtoBuf) Render(w http.ResponseWriter) error {
 
 // WriteContentType (ProtoBuf) writes ProtoBuf ContentType.
 func (r ProtoBuf) WriteContentType(w http.ResponseWriter) {
-	writeContentType(w, protobufContentType)
+	render.WriteContentType(w, protobufContentType)
 }
